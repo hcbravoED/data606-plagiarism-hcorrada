@@ -40,7 +40,7 @@ def _get_kstats(truth_pairs, false_pairs, jacc):
     
     return tp, fp
        
-def run_experiment(train_file, truth_file,
+def run(train_file, truth_file,
                    kvals = [2,5,10,20,40,60,120]):
     artdb = ArticleDB(train_file)
     truth_pairs, false_pairs, alldocs = _setup_fp_dataset(artdb, truth_file)

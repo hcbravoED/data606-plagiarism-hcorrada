@@ -7,8 +7,9 @@ Created on Thu Oct  5 12:55:13 2017
 """
 
 def _jaccard_similarity(s1, s2):
-    # YOU NEED TO IMPLEMENT THIS
-    return 0.5
+    numerator = len(s1.intersection(s2))
+    denominator = len(s2.union(s2))
+    return 1.0 * numerator / denominator
 
 class Jaccard:
     def __init__(self):

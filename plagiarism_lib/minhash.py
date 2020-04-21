@@ -69,8 +69,18 @@ def _make_minhash_sigmatrix(shingled_data, num_hashes, inverted=False):
     
     # iterate over shingles 
     for s, docid in inv_index:
+        if s != last_s:
+            last_s = s
+            hashvals = [h(s) for h in hash_funcs]
+            
+        # find the appropriate column in signature matrix
+        j = docids.index(docid)
         
-        ## IMPLEMENT THIS LOOP!!!
+        # update rows of appropriate column as needed
+        for i in range(num_hashes):
+            if hashvals[i] < sigmat[i,j]:
+                # saw a smaller hash value, update the signature matrix
+                sigmat[i,j] = hashvals[i]
         
     return sigmat, docids
 
@@ -109,8 +119,7 @@ class MinHash:
     def get_similarity(self, di, dj):
         i = self._docids.index(di)
         j = self._docids.index(dj)
-        # FINISH IMPLEMENTING THIS!!!
-        return 0.5
+        return np.mean(self._mat[:i] == self._mat[:,j])
     
     def save_matrix(self, file):
         np.save(file, self._mat)
